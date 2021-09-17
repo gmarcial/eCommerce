@@ -9,6 +9,13 @@ type ProductRepository struct {
 	products map[uint32]*products.Product
 }
 
+//NewProductRepository constructor to instantiate the repository of the product.
+func NewProductRepository(products map[uint32]*products.Product) *ProductRepository {
+	return &ProductRepository{
+		products: products,
+	}
+}
+
 //GetProducts retrieve the products through your IDS.
 func (repository *ProductRepository) GetProducts(IDS []uint32) ([]*products.Product, error) {
 	productsRetrieve := make([]*products.Product, 0)
