@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestProductRepository_GetProductsThroughYourIDS(t *testing.T) {
+func TestUnitProductRepository_GetProductsThroughYourIDS(t *testing.T) {
 	//Arrange
 	firstProduct, _ := products.NewProduct(1, "Ergonomic Wooden Pants", "Deleniti beatae porro.", 15157, false)
 	secondProduct, _ := products.NewProduct(2, "Ergonomic Cotton Keyboard", "Iste est ratione excepturi repellendus adipisci qui.", 93811, false)
@@ -65,7 +65,7 @@ func TestProductRepository_GetProductsThroughYourIDS(t *testing.T) {
 	}
 }
 
-func TestProductRepository_GetAGiftProduct(t *testing.T) {
+func TestUnitProductRepository_GetAGiftProduct(t *testing.T) {
 	//Arrange
 	giftProduct, _ := products.NewProduct(6, "Handcrafted Steel Towels", "Nam ea sed animi neque qui non quis iste.", 900, true)
 
@@ -88,7 +88,7 @@ func TestProductRepository_GetAGiftProduct(t *testing.T) {
 	}
 }
 
-func TestProductRepository_TryGetAGiftProductWhenDontExist(t *testing.T) {
+func TestUnitProductRepository_TryGetAGiftProductWhenDontExist(t *testing.T) {
 	//Arrange
 	firstProduct, _ := products.NewProduct(1, "Ergonomic Wooden Pants", "Deleniti beatae porro.", 15157, false)
 

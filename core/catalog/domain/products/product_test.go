@@ -2,7 +2,7 @@ package products
 
 import "testing"
 
-func TestCreateAProductWithSuccess(t *testing.T) {
+func TestUnitCreateAProductWithSuccess(t *testing.T) {
 	//Arrange
 	id := uint32(1)
 	title := "Ergonomic Wooden Pants"
@@ -39,7 +39,7 @@ func TestCreateAProductWithSuccess(t *testing.T) {
 	}
 }
 
-func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
+func TestUnitTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 	//Arrange
 	testCases := []struct {
 		name string
@@ -139,7 +139,7 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 	}
 }
 
-func TestProduct_ApplyDiscountPercentage(t *testing.T) {
+func TestUnitProduct_ApplyDiscountPercentage(t *testing.T) {
 	//Arrange
 	testCases := []struct {
 		name string
@@ -282,7 +282,7 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 	}
 }
 
-func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
+func TestUnitProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 	//Arrange
 	testCases := []struct {
 		name string
