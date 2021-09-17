@@ -53,7 +53,7 @@ func NewProduct(id uint32, title, description string, amount uint64, isGift bool
 
 //ApplyDiscount apply a discount percentage to the cost of the product, calculating and store the discount value.
 func (product *Product) ApplyDiscount(discountPercentage float32) error {
-	if discountPercentage <= 0 {
+	if discountPercentage < 0 {
 		return errors.New(ErrInvalidDiscountPercentageValue)
 	}
 

@@ -257,6 +257,24 @@ func TestUnitProduct_ApplyDiscountPercentage(t *testing.T) {
 			},
 			uint64(0),
 		},
+		{
+			"Apply 0% off discount in amount 10000",
+			struct {
+				product            *Product
+				discountPercentage float32
+			}{
+				&Product{
+					ID:          uint32(7),
+					Title:       "Drogba Alads Esdijsaaa",
+					Description: "Pow Lariat Ninjutsu Ha Kikl Loas Casrt Attes.",
+					Amount:      uint64(10000),
+					Discount:    uint64(0),
+					IsGift:      false,
+				},
+				float32(0),
+			},
+			uint64(0),
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -293,7 +311,7 @@ func TestUnitProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 		want string
 	}{
 		{
-			"Apply 0% off discount in amount 15157",
+			"Apply -10% off discount in amount 15157",
 			struct {
 				product            *Product
 				discountPercentage float32
@@ -306,7 +324,7 @@ func TestUnitProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float32(0),
+				float32(-10),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -414,7 +432,7 @@ func TestUnitProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 
 			//Assert
 			discount := product.Discount
-			if discount != expectedDiscount && err == nil {
+			if discount != expectedDiscount || err == nil {
 				t.Errorf("was possible to apply discount with the invalid value of a discount percentage: %v", discountPercentage)
 			}
 		})
