@@ -12,7 +12,7 @@ var (
 
 //Product represents the entity of product in the catalog context.
 type Product struct {
-	ID          uint64
+	ID          uint32
 	Title       string
 	Description string
 	Amount      uint64
@@ -21,7 +21,7 @@ type Product struct {
 }
 
 //NewProduct constructor to instantiate a product.
-func NewProduct(id uint64, title, description string, amount uint64, isGift bool) (*Product, error) {
+func NewProduct(id uint32, title, description string, amount uint64, isGift bool) (*Product, error) {
 	if id == 0 {
 		message := fmt.Sprintf(ErrDontInformedValue, "id")
 		return nil, errors.New(message)
@@ -52,12 +52,12 @@ func NewProduct(id uint64, title, description string, amount uint64, isGift bool
 }
 
 //ApplyDiscount apply a discount percentage to the cost of the product, calculating and store the discount value.
-func (product *Product) ApplyDiscount(discountPercentage float64) error {
+func (product *Product) ApplyDiscount(discountPercentage float32) error {
 	if discountPercentage <= 0 {
 		return errors.New(ErrInvalidDiscountPercentageValue)
 	}
 
-	amount := float64(product.Amount)
+	amount := float32(product.Amount)
 	discount := (amount * discountPercentage) / 100
 	product.Discount = uint64(discount)
 

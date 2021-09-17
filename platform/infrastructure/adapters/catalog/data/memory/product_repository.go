@@ -6,11 +6,11 @@ import (
 
 //ProductRepository interface to access and manipulate products data source in-memory.
 type ProductRepository struct {
-	products map[uint64]*products.Product
+	products map[uint32]*products.Product
 }
 
 //GetProducts retrieve the products through your IDS.
-func (repository *ProductRepository) GetProducts(IDS []uint64) ([]*products.Product, error) {
+func (repository *ProductRepository) GetProducts(IDS []uint32) ([]*products.Product, error) {
 	productsRetrieve := make([]*products.Product, 0)
 
 	for i := 0; i < len(IDS); i++ {

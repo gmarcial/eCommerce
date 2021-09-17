@@ -11,7 +11,7 @@ func TestProductRepository_GetProductsThroughYourIDS(t *testing.T) {
 	secondProduct, _ := products.NewProduct(2, "Ergonomic Cotton Keyboard", "Iste est ratione excepturi repellendus adipisci qui.", 93811, false)
 	thirdProduct, _ := products.NewProduct(3, "Gorgeous Cotton Chips", "Nulla rerum tempore rem.", 60356, false)
 
-	productsInMemory := map[uint64]*products.Product{
+	productsInMemory := map[uint32]*products.Product{
 		firstProduct.ID:  firstProduct,
 		secondProduct.ID: secondProduct,
 		thirdProduct.ID:  thirdProduct,
@@ -21,17 +21,17 @@ func TestProductRepository_GetProductsThroughYourIDS(t *testing.T) {
 
 	testCases := []struct {
 		name string
-		give []uint64
+		give []uint32
 		want []*products.Product
 	}{
 		{
 			"Try get products which don't exist",
-			[]uint64{423455234234, 34537665456, 896777686867},
+			[]uint32{42345523, 3453766, 89677768},
 			[]*products.Product{},
 		},
 		{
 			"Get products which exist",
-			[]uint64{1, 2, 3},
+			[]uint32{1, 2, 3},
 			[]*products.Product{firstProduct, secondProduct, thirdProduct},
 		},
 	}
@@ -69,7 +69,7 @@ func TestProductRepository_GetAGiftProduct(t *testing.T) {
 	//Arrange
 	giftProduct, _ := products.NewProduct(6, "Handcrafted Steel Towels", "Nam ea sed animi neque qui non quis iste.", 900, true)
 
-	productsInMemory := map[uint64]*products.Product{
+	productsInMemory := map[uint32]*products.Product{
 		giftProduct.ID: giftProduct,
 	}
 
@@ -92,7 +92,7 @@ func TestProductRepository_TryGetAGiftProductWhenDontExist(t *testing.T) {
 	//Arrange
 	firstProduct, _ := products.NewProduct(1, "Ergonomic Wooden Pants", "Deleniti beatae porro.", 15157, false)
 
-	productsInMemory := map[uint64]*products.Product{
+	productsInMemory := map[uint32]*products.Product{
 		firstProduct.ID: firstProduct,
 	}
 

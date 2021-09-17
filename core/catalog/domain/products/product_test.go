@@ -4,7 +4,7 @@ import "testing"
 
 func TestCreateAProductWithSuccess(t *testing.T) {
 	//Arrange
-	id := uint64(1)
+	id := uint32(1)
 	title := "Ergonomic Wooden Pants"
 	description := "Deleniti beatae porro."
 	amount := uint64(15157)
@@ -44,7 +44,7 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 	testCases := []struct {
 		name string
 		give struct {
-			id          uint64
+			id          uint32
 			title       string
 			description string
 			amount      uint64
@@ -55,13 +55,13 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 		{
 			"Don't is informed the id",
 			struct {
-				id          uint64
+				id          uint32
 				title       string
 				description string
 				amount      uint64
 				isGift      bool
 			}{
-				uint64(0),
+				uint32(0),
 				"Ergonomic Wooden Pants",
 				"Deleniti beatae porro.",
 				uint64(15157),
@@ -72,13 +72,13 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 		{
 			"Don't is informed the title",
 			struct {
-				id          uint64
+				id          uint32
 				title       string
 				description string
 				amount      uint64
 				isGift      bool
 			}{
-				uint64(1),
+				uint32(1),
 				"",
 				"Deleniti beatae porro.",
 				uint64(15157),
@@ -89,13 +89,13 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 		{
 			"Don't is informed the description",
 			struct {
-				id          uint64
+				id          uint32
 				title       string
 				description string
 				amount      uint64
 				isGift      bool
 			}{
-				uint64(1),
+				uint32(1),
 				"Ergonomic Wooden Pants",
 				"",
 				uint64(15157),
@@ -106,13 +106,13 @@ func TestTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 		{
 			"Don't is informed the amount",
 			struct {
-				id          uint64
+				id          uint32
 				title       string
 				description string
 				amount      uint64
 				isGift      bool
 			}{
-				uint64(1),
+				uint32(1),
 				"Ergonomic Wooden Pants",
 				"Deleniti beatae porro.",
 				uint64(0),
@@ -145,7 +145,7 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 		name string
 		give struct {
 			product            *Product
-			discountPercentage float64
+			discountPercentage float32
 		}
 		want uint64
 	}{
@@ -153,17 +153,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 7% off discount in amount 15157",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(1),
+					ID:          uint32(1),
 					Title:       "Ergonomic Wooden Pants",
 					Description: "Deleniti beatae porro.",
 					Amount:      uint64(15157),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(7),
+				float32(7),
 			},
 			uint64(1060),
 		},
@@ -171,17 +171,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 10.5% off discount in amount 93811",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(2),
+					ID:          uint32(2),
 					Title:       "Ergonomic Cotton Keyboard",
 					Description: "Iste est ratione excepturi repellendus adipisci qui.",
 					Amount:      uint64(93811),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(10.5),
+				float32(10.5),
 			},
 			uint64(9850),
 		},
@@ -189,17 +189,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 0.8% off discount in amount 60356",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(3),
+					ID:          uint32(3),
 					Title:       "Gorgeous Cotton Chips",
 					Description: "Nulla rerum tempore rem.",
 					Amount:      uint64(60356),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(0.8),
+				float32(0.8),
 			},
 			uint64(482),
 		},
@@ -207,17 +207,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 45.17% off discount in amount 56230",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(4),
+					ID:          uint32(4),
 					Title:       "Fantastic Frozen Chair",
 					Description: "Et neque debitis omnis quam enim cupiditate.",
 					Amount:      uint64(56230),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(45.17),
+				float32(45.17),
 			},
 			uint64(25399),
 		},
@@ -225,17 +225,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 23.72% off discount in amount 42647",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(5),
+					ID:          uint32(5),
 					Title:       "Incredible Concrete Soap",
 					Description: "Dolorum nobis temporibus aut dolorem quod qui corrupti.",
 					Amount:      uint64(42647),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(23.72),
+				float32(23.72),
 			},
 			uint64(10115),
 		},
@@ -243,17 +243,17 @@ func TestProduct_ApplyDiscountPercentage(t *testing.T) {
 			"Apply 0.02% off discount in amount 900",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(6),
+					ID:          uint32(6),
 					Title:       "Handcrafted Steel Towels",
 					Description: "Nam ea sed animi neque qui non quis iste.",
 					Amount:      uint64(900),
 					Discount:    uint64(0),
 					IsGift:      true,
 				},
-				float64(0.02),
+				float32(0.02),
 			},
 			uint64(0),
 		},
@@ -288,7 +288,7 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 		name string
 		give struct {
 			product            *Product
-			discountPercentage float64
+			discountPercentage float32
 		}
 		want string
 	}{
@@ -296,17 +296,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply 0% off discount in amount 15157",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(1),
+					ID:          uint32(1),
 					Title:       "Ergonomic Wooden Pants",
 					Description: "Deleniti beatae porro.",
 					Amount:      uint64(15157),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(0),
+				float32(0),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -314,17 +314,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply -10.5% off discount in amount 93811",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(2),
+					ID:          uint32(2),
 					Title:       "Ergonomic Cotton Keyboard",
 					Description: "Iste est ratione excepturi repellendus adipisci qui.",
 					Amount:      uint64(93811),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(-10.5),
+				float32(-10.5),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -332,17 +332,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply -0.8% off discount in amount 60356",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(3),
+					ID:          uint32(3),
 					Title:       "Gorgeous Cotton Chips",
 					Description: "Nulla rerum tempore rem.",
 					Amount:      uint64(60356),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(-0.8),
+				float32(-0.8),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -350,17 +350,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply -45.17% off discount in amount 56230",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(4),
+					ID:          uint32(4),
 					Title:       "Fantastic Frozen Chair",
 					Description: "Et neque debitis omnis quam enim cupiditate.",
 					Amount:      uint64(56230),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(-45.17),
+				float32(-45.17),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -368,17 +368,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply -23.72% off discount in amount 42647",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(5),
+					ID:          uint32(5),
 					Title:       "Incredible Concrete Soap",
 					Description: "Dolorum nobis temporibus aut dolorem quod qui corrupti.",
 					Amount:      uint64(42647),
 					Discount:    uint64(0),
 					IsGift:      false,
 				},
-				float64(-23.72),
+				float32(-23.72),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
@@ -386,17 +386,17 @@ func TestProduct_TryApplyDiscountWithInvalidPercentage(t *testing.T) {
 			"Apply -0.02% off discount in amount 900",
 			struct {
 				product            *Product
-				discountPercentage float64
+				discountPercentage float32
 			}{
 				&Product{
-					ID:          uint64(6),
+					ID:          uint32(6),
 					Title:       "Handcrafted Steel Towels",
 					Description: "Nam ea sed animi neque qui non quis iste.",
 					Amount:      uint64(900),
 					Discount:    uint64(0),
 					IsGift:      true,
 				},
-				float64(-0.02),
+				float32(-0.02),
 			},
 			ErrInvalidDiscountPercentageValue,
 		},
