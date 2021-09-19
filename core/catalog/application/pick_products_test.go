@@ -42,6 +42,24 @@ func buildPickProductsUseCaseTestUnit(discountResponse *client.GetDiscountRespon
 	}
 }
 
+func TestUnitPickProductsUseCase_TryPickProductsWithoutInformTheProductsToBePicked(t *testing.T) {
+	//Arrange
+	useCase := NewPickProductsUseCase(&mock.ProductRepository{}, &mock.DiscountClient{})
+	var pickProducts *PickProducts
+
+	//Action
+	pickedProducts, err := useCase.Execute(pickProducts)
+
+	//Assert
+	if pickedProducts != nil && err == nil {
+		t.Error("it was possible to pick products without informing the products to be picked")
+	}
+
+	if err.Error() != "don't was informed the products to be picked" {
+		t.Errorf("the occurred error is different of expected: %v", err.Error())
+	}
+}
+
 func TestUnitPickProductsUseCase_TryPickProductsWithoutInformIDS(t *testing.T) {
 	//Arrange
 	testCases := []struct {
