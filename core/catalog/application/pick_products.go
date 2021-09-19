@@ -22,7 +22,7 @@ func NewPickProductsUseCase(productRepository products.ProductRepository, discou
 	}
 }
 
-//PickProducts represent the products to be picked,  entry contract of the PickProductsUseCase.
+//PickProducts represent the products to be picked, entry contract of the PickProductsUseCase.
 type PickProducts struct {
 	IDS []uint32
 }
@@ -35,7 +35,7 @@ type PickedProducts struct {
 //Execute ...
 func (useCase *PickProductsUseCase) Execute(pickProducts *PickProducts) (*PickedProducts, error) {
 	if pickProducts == nil {
-		return nil, errors.New("")
+		return nil, errors.New("don't was informed the products to be picked")
 	}
 
 	IDS := pickProducts.IDS
