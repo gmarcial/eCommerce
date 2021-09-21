@@ -37,11 +37,6 @@ func NewProduct(id uint32, quantity uint32, unitAmount, discount uint64, isGift 
 		return nil, errors.New(message)
 	}
 
-	if discount == 0 {
-		message := fmt.Sprintf(ErrDontInformedValue, "discount")
-		return nil, errors.New(message)
-	}
-
 	totalAmount := (unitAmount * uint64(quantity))
 
 	return &Product{

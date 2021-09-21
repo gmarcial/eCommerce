@@ -108,23 +108,6 @@ func TestUnitTryCreateAProductDontInformingMandatoryValues(t *testing.T) {
 			},
 			"don't was informed the unit amount of product",
 		},
-		{
-			"Don't is informed the amount",
-			struct {
-				id          uint32
-				quantity    uint32
-				unitAmount  uint64
-				discount    uint64
-				isGift      bool
-			}{
-				uint32(1),
-				uint32(2),
-				uint64(1000),
-				uint64(0),
-				false,
-			},
-			"don't was informed the discount of product",
-		},
 	}
 
 	for _, testCase := range testCases {
