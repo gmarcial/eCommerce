@@ -15,7 +15,7 @@ func TestUnitCreateAProductWithSuccess(t *testing.T) {
 
 	//Assert
 	if product == nil && err != nil {
-		t.Error("the product don't was created, occurred an error")
+		t.Errorf("the product don't was created, occurred an error: %v", err.Error())
 	}
 
 	if product.ID != id {
@@ -178,7 +178,7 @@ func TestUnitProduct_AppendMoreProducts(t *testing.T) {
 	}
 }
 
-func TestUnitProduct_AppendAProductForGift(t *testing.T) {
+func TestUnitProduct_AppendAProductGiftWrapped(t *testing.T) {
 	//Arrange
 	product, _ := NewProduct(2, 2, 5000, 750, true)
 	appendedGift, _ := NewProduct(2, 2, 5000, 750, true)
@@ -204,7 +204,7 @@ func TestUnitProduct_AppendAProductForGift(t *testing.T) {
 	}
 }
 
-func TestUnitProduct_TryAProductForGiftWhichDontIsClassifiedAsAGift(t *testing.T) {
+func TestUnitProduct_TryWrapGiftAProductWhichDontIsClassifiedAsAGift(t *testing.T) {
 	//Arrange
 	product, _ := NewProduct(2, 2, 5000, 750, false)
 
@@ -217,7 +217,7 @@ func TestUnitProduct_TryAProductForGiftWhichDontIsClassifiedAsAGift(t *testing.T
 	}
 }
 
-func TestUnitProduct_AProductForGift(t *testing.T) {
+func TestUnitProduct_WrapGiftAProduct(t *testing.T) {
 	//Arrange
 	product, _ := NewProduct(2, 2, 5000, 750, true)
 
