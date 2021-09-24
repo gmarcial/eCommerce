@@ -8,6 +8,21 @@ import (
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
 )
 
+//PickProducts represent the products to be picked, entry contract of the PickProductsUseCase.
+type PickProducts struct {
+	IDS []uint32
+}
+
+//PickedProducts represent the picked products, output contract of the PickProductsUseCase.
+type PickedProducts struct {
+	Products []*model.Product
+}
+
+//IPickProductsUseCase the interface to api with behavior to pick the selected products.
+type IPickProductsUseCase interface {
+	Execute (pickProducts *PickProducts) (*PickedProducts, error)
+}
+
 //PickProductsUseCase the api with behavior to pick the selected products.
 type PickProductsUseCase struct {
 	productRepository     products.ProductRepository
@@ -22,17 +37,7 @@ func NewPickProductsUseCase(productRepository products.ProductRepository, discou
 	}
 }
 
-//PickProducts represent the products to be picked, entry contract of the PickProductsUseCase.
-type PickProducts struct {
-	IDS []uint32
-}
-
-//PickedProducts represent the picked products, output contract of the PickProductsUseCase.
-type PickedProducts struct {
-	Products []*model.Product
-}
-
-//Execute ...
+//Execute the use case
 func (useCase *PickProductsUseCase) Execute(pickProducts *PickProducts) (*PickedProducts, error) {
 	if pickProducts == nil {
 		return nil, errors.New("don't was informed the products to be picked")
