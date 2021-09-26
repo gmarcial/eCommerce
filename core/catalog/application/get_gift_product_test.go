@@ -1,10 +1,10 @@
 package application
 
 import (
+	"gmarcial/eCommerce/core/catalog/application/mock"
 	"gmarcial/eCommerce/core/catalog/application/model"
 	"gmarcial/eCommerce/core/catalog/domain/products"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
-	"gmarcial/eCommerce/platform/infrastructure/test/mock"
 	"testing"
 )
 

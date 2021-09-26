@@ -3,10 +3,10 @@ package application
 import (
 	"context"
 	"errors"
+	"gmarcial/eCommerce/core/catalog/application/mock"
 	"gmarcial/eCommerce/core/catalog/domain/products"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
-	"gmarcial/eCommerce/platform/infrastructure/test/mock"
 	"google.golang.org/grpc"
 	"testing"
 )
