@@ -21,6 +21,11 @@ type GetGiftProductUseCase struct {
 	productRepository     products.ProductRepository
 }
 
+//NewGetGiftProductUseCase constructor to instantiate the use case to pick get gift product.
+func NewGetGiftProductUseCase(productRepository products.ProductRepository) *GetGiftProductUseCase{
+	return &GetGiftProductUseCase{productRepository: productRepository}
+}
+
 //Execute the use case
 func (useCase GetGiftProductUseCase) Execute() (*GiftProductObtained, error) {
 	product, err := useCase.productRepository.GetGiftProduct()
