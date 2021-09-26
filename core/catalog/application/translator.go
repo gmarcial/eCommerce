@@ -1,4 +1,4 @@
-package translator
+package application
 
 import (
 	"gmarcial/eCommerce/core/catalog/application/model"

@@ -2,7 +2,6 @@ package application
 
 import (
 	"gmarcial/eCommerce/core/catalog/application/model"
-	"gmarcial/eCommerce/core/catalog/application/translator"
 	"gmarcial/eCommerce/core/catalog/domain/products"
 )
 
@@ -37,7 +36,7 @@ func (useCase GetGiftProductUseCase) Execute() (*GiftProductObtained, error) {
 		return nil, nil
 	}
 
-	giftProduct := translator.DomainProductToModelProduct(product)
+	giftProduct := DomainProductToModelProduct(product)
 
 	return &GiftProductObtained{Product: giftProduct}, nil
 }
