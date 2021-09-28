@@ -15,7 +15,7 @@ func TestUnitTryNewCart(t *testing.T) {
 	}
 }
 
-func TestUnitNewCart(t *testing.T) {
+func TestUnitCreateANewCart(t *testing.T) {
 	//Arrange
 	firstProduct, _ := NewProduct(1, 3, 500, 100, false)
 	secondProduct, _ := NewProduct(2, 2, 250, 20, false)
@@ -68,6 +68,75 @@ func TestUnitNewCart(t *testing.T) {
 	}
 
 	for _, product := range products {
+		addedProduct, exist := cart.Products[product.ID]
+		if !exist {
+			t.Errorf("the product of ID %v don't was found", product.ID)
+		}
+
+		if addedProduct == nil {
+			t.Errorf("the product of ID %v was found, but is nil", product.ID)
+		}
+	}
+}
+
+func TestUnitCreateANewCartIgnoringRepeatedProducts(t *testing.T) {
+	//Arrange
+	firstProduct, _ := NewProduct(1, 3, 500, 100, false)
+	secondProduct, _ := NewProduct(2, 2, 250, 20, false)
+	thirdProduct, _ := NewProduct(3, 1, 1000, 300, false)
+	fourthProduct, _ := NewProduct(4, 5, 5000, 750, false)
+	fifthProduct, _ := NewProduct(5, 2, 45, 0, false)
+	sixthProduct, _ := NewProduct(6, 2, 88, 15, false)
+	seventhProduct, _ := NewProduct(7, 3, 267, 25, false)
+	eighthProduct, _ := NewProduct(8, 1, 678, 50, false)
+	ninthProduct, _ := NewProduct(8, 1, 678, 50, false)
+	tenthProduct, _ := NewProduct(8, 1, 678, 50, false)
+
+	products := []*Product{
+		firstProduct,
+		secondProduct,
+		thirdProduct,
+		fourthProduct,
+		fifthProduct,
+		sixthProduct,
+		seventhProduct,
+		eighthProduct,
+		ninthProduct,
+		tenthProduct,
+	}
+
+	expectedTotalAmount := uint64(29745)
+	expectedTotalDiscount := uint64(1260)
+	expectedTotalAmountNet := (expectedTotalAmount - expectedTotalDiscount)
+	expectedTotalQuantityProducts := 8
+
+	//Action
+	cart, err := NewCart(products)
+
+	//Assert
+	if err != nil {
+		t.Errorf("the cart don't was created, occurred an error: %v", err.Error())
+	}
+
+	if cart.TotalAmount != expectedTotalAmount {
+		t.Errorf("actual value of the total amount is %v, expected to %v", cart.TotalAmount, expectedTotalAmount)
+	}
+
+	if cart.TotalAmountNet != expectedTotalAmountNet {
+		t.Errorf("actual value of the total amount net is %v, expected to %v", cart.TotalAmountNet, expectedTotalAmountNet)
+	}
+
+	if cart.TotalDiscount != expectedTotalDiscount {
+		t.Errorf("actual value of the total of discount is %v, expected to %v", cart.TotalDiscount, expectedTotalDiscount)
+	}
+
+	quantityProducts := len(cart.Products)
+	if quantityProducts != expectedTotalQuantityProducts {
+		t.Errorf("actual quantity of products is %v, expected to %v", quantityProducts, expectedTotalQuantityProducts)
+	}
+
+	for i := 0; i < quantityProducts; i++{
+		product := products[i]
 		addedProduct, exist := cart.Products[product.ID]
 		if !exist {
 			t.Errorf("the product of ID %v don't was found", product.ID)

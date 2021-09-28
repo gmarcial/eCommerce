@@ -21,6 +21,10 @@ func NewCart(products []*Product) (*Cart, error) {
 	addedProducts := make(map[uint32]*Product, 0)
 	var totalAmount, totalAmountNet, totalDiscount uint64
 	for _, product := range products{
+		if _, exist := addedProducts[product.ID]; exist {
+			continue
+		}
+
 		totalAmount += product.TotalAmount
 		totalAmountNet += (product.TotalAmount - product.Discount)
 		totalDiscount += product.Discount
