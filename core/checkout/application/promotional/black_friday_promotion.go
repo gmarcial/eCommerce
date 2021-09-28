@@ -12,19 +12,19 @@ const (
 
 //BlackFridayPromotion represent the promotion of black friday
 type BlackFridayPromotion struct {
-	blackFridayDate time.Time
+	blackFridayDay        time.Time
 	getGiftProductUseCase application.IGetGiftProductUseCase
 }
 
 //NewBlackFridayPromotion constructor to instantiate the use case to apply the black friday promotion.
 func NewBlackFridayPromotion(blackFridayDate time.Time, getGiftProductUseCase application.IGetGiftProductUseCase) *BlackFridayPromotion{
-	return &BlackFridayPromotion{blackFridayDate: blackFridayDate, getGiftProductUseCase: getGiftProductUseCase}
+	return &BlackFridayPromotion{blackFridayDay: blackFridayDate, getGiftProductUseCase: getGiftProductUseCase}
 }
 
 //Apply the promotion referent to black friday
 func (promotion *BlackFridayPromotion) Apply(cart *purchase.Cart) error {
 	dateNow := time.Now()
-	blackFridayDate := promotion.blackFridayDate
+	blackFridayDate := promotion.blackFridayDay
 	if dateNow.Day() != blackFridayDate.Day() ||
 		dateNow.Month() != blackFridayDate.Month() ||
 		dateNow.Year() != blackFridayDate.Year() {
