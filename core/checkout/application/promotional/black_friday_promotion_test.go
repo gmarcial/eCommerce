@@ -3,9 +3,9 @@ package promotional
 import (
 	"errors"
 	"gmarcial/eCommerce/core/catalog/application"
-	"gmarcial/eCommerce/core/catalog/application/mock"
 	"gmarcial/eCommerce/core/catalog/application/model"
 	"gmarcial/eCommerce/core/catalog/domain/products"
+	"gmarcial/eCommerce/core/checkout/application/mock"
 	"gmarcial/eCommerce/core/checkout/domain/purchase"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
 	"testing"
@@ -111,7 +111,7 @@ func TestUnitBlackFridayPromotion_ApplyPromotionWhenBlackFridayAndDontFoundGiftP
 	}
 }
 
-func buildGetGiftProductUseCaseTestUnit(product *model.Product, err error) *mock.GetGiftProductUseCase{
+func buildGetGiftProductUseCaseTestUnit(product *model.Product, err error) *mock.GetGiftProductUseCase {
 	return &mock.GetGiftProductUseCase{ExecuteMock: func() (*application.GiftProductObtained, error) {
 		if product != nil {
 			return &application.GiftProductObtained{Product: product}, err
