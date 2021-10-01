@@ -3,6 +3,7 @@ module gmarcial/eCommerce
 go 1.17
 
 require (
+	github.com/go-chi/chi v1.5.4 // indirect
 	github.com/sarulabs/di v2.0.0+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/BurntSushi/toml v0.4.1 // indirect

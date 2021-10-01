@@ -9,15 +9,15 @@ import (
 
 //SelectedProducts represent the products selects to add in cart, entry contract of the MakeCartUseCase.
 type SelectedProducts struct {
-	Products []*model.SelectedProduct
+	Products []*model.SelectedProduct `json:"products"`
 }
 
 //CartProducts represent the shopping cart, output contract of the MakeCartUseCase.
 type CartProducts struct {
-	TotalAmount    uint64
-	TotalAmountNet uint64
-	TotalDiscount  uint64
-	Products       []*model.Product
+	TotalAmount    uint64           `json:"total_amount"`
+	TotalAmountNet uint64           `json:"total_amount_with_discount"`
+	TotalDiscount  uint64           `json:"total_discount"`
+	Products       []*model.Product `json:"products"`
 }
 
 //IMakeCartUseCase the interface to api with behavior of construct the shopping cart
