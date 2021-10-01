@@ -84,7 +84,7 @@ func buildGetGiftProductUseCaseTestEndToEnd(giftProduct *products.Product) *GetG
 
 	productRepository := memory.NewProductRepository(productsInMemory)
 
-	return &GetGiftProductUseCase{productRepository: productRepository}
+	return NewGetGiftProductUseCase(productRepository)
 }
 
 func TestEndToEndGetGiftProductUseCase_TryObtainGiftProduct(t *testing.T) {
