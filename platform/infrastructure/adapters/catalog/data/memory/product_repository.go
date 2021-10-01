@@ -18,29 +18,31 @@ func NewProductRepository(products map[uint32]*products.Product) *ProductReposit
 
 //GetProducts retrieve the products through your IDS.
 func (repository *ProductRepository) GetProducts(IDS []uint32) ([]*products.Product, error) {
-	productsRetrieve := make([]*products.Product, 0)
+	retrievedProducts := make([]*products.Product, 0)
 
 	for i := 0; i < len(IDS); i++ {
 		ID := IDS[i]
 		if product, exist := repository.products[ID]; exist {
-			productsRetrieve = append(productsRetrieve, product)
+			retrievedProduct := *product
+			retrievedProducts = append(retrievedProducts, &retrievedProduct)
 		}
 	}
 
-	return productsRetrieve, nil
+	return retrievedProducts, nil
 }
 
 //GetGiftProduct retrieve a product to gift.
 func (repository *ProductRepository) GetGiftProduct() (*products.Product, error) {
-	var productRetrieve *products.Product
+	var retrievedProduct products.Product
 
 	for _, product := range repository.products {
 		if !product.IsGift {
 			continue
 		}
 
-		productRetrieve = product
+		retrievedProduct = *product
+		return &retrievedProduct, nil
 	}
 
-	return productRetrieve, nil
+	return nil, nil
 }
