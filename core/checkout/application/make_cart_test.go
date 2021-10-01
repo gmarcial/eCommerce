@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func TestUnitMakeCartUseCase_ConstructTheShoppingCartOutOfBlackFriday(t *testing.T) {
+func TestEndToEndMakeCartUseCase_ConstructTheShoppingCartOutOfBlackFriday(t *testing.T) {
 	//Arrange
 	blackFridayDate := time.Now().AddDate(1, 0, 0)
 	makeCartUseCase := buildMakeCartUseCaseTestEndToEnd(blackFridayDate)
@@ -104,7 +104,7 @@ func TestUnitMakeCartUseCase_ConstructTheShoppingCartOutOfBlackFriday(t *testing
 	}
 }
 
-func TestUnitMakeCartUseCase_ConstructTheShoppingCartInBlackFriday(t *testing.T) {
+func TestEndToEndMakeCartUseCase_ConstructTheShoppingCartInBlackFriday(t *testing.T) {
 	//Arrange
 	blackFridayDate := time.Now()
 	makeCartUseCase := buildMakeCartUseCaseTestEndToEnd(blackFridayDate)
@@ -186,6 +186,54 @@ func TestUnitMakeCartUseCase_ConstructTheShoppingCartInBlackFriday(t *testing.T)
 		if *cartProducts[i] != *expectedCartProducts[i] {
 			t.Error("The product is different of expected")
 		}
+	}
+}
+
+func TestEndToEndMakeCartUseCase_ConstructAEmptyShoppingCartWhenDontInformTheSelectedProducts(t *testing.T) {
+	//Arrange
+	blackFridayDate := time.Now().AddDate(1, 0, 0)
+	makeCartUseCase := buildMakeCartUseCaseTestEndToEnd(blackFridayDate)
+
+	modelSelectedProducts := []*model.SelectedProduct{}
+	selectedProducts := &SelectedProducts{Products: modelSelectedProducts}
+
+	expectedTotalAmount := uint64(0)
+	expectedTotalAmountNet := uint64(0)
+	expectedTotalDiscount := uint64(0)
+	expectedCartProducts := []*model.Product{}
+	expectedCartProductsQuantity := len(expectedCartProducts)
+
+	//Action
+	cart, err := makeCartUseCase.Execute(selectedProducts)
+
+	//Assert
+	if err != nil {
+		t.Errorf("an error occurred while building the shopping cart: %v", err.Error())
+	}
+
+	if cart == nil {
+		t.Error("an error occurred while building the shopping cart, is nil")
+	}
+
+	totalAmount := cart.TotalAmount
+	if totalAmount != expectedTotalAmount {
+		t.Errorf("The total amount %v is different of expected %v", totalAmount, expectedTotalAmount)
+	}
+
+	totalAmountNet := cart.TotalAmountNet
+	if cart.TotalAmountNet != expectedTotalAmountNet {
+		t.Errorf("The total amount net %v is different of expected %v", totalAmountNet, expectedTotalAmountNet)
+	}
+
+	totalDiscount := cart.TotalDiscount
+	if cart.TotalDiscount != expectedTotalDiscount {
+		t.Errorf("The total discount %v is different of expected %v", totalDiscount, expectedTotalDiscount)
+	}
+
+	cartProducts := cart.Products
+	cartProductsQuantity := len(cartProducts)
+	if cartProductsQuantity != expectedCartProductsQuantity {
+		t.Errorf("The quantity of products in cart %v is different of expected %v", cartProductsQuantity, expectedCartProductsQuantity)
 	}
 }
 

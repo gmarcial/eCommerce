@@ -42,6 +42,10 @@ func NewMakeCartUseCase(pickProductsUseCase application.IPickProductsUseCase, pr
 //Execute the use case
 func (useCase *MakeCartUseCase) Execute(selectedProducts *SelectedProducts) (*CartProducts, error) {
 	pickProducts := SelectedProductsToPickProducts(selectedProducts)
+	if len(pickProducts.IDS) == 0 {
+		return &CartProducts{Products: []*model.Product{}}, nil
+	}
+
 	pickedProducts, err := useCase.pickProductsUseCase.Execute(pickProducts)
 	if err != nil {
 		return nil, err
