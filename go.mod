@@ -4,6 +4,11 @@ go 1.17
 
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/BurntSushi/toml v0.4.1 // indirect
+	github.com/ilyakaznacheev/cleanenv v1.2.5 // indirect
+	github.com/joho/godotenv v1.4.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
+	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
