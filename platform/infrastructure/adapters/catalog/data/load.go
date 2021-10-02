@@ -12,6 +12,7 @@ const (
 	sourceRelativePath = "platform/infrastructure/adapters/catalog/data/source/products.json"
 )
 
+//LoadProducts read the products of data source and load in memory
 func LoadProducts() (map[uint32]*products.Product, error) {
 	sourcePath, err := filepathutil.JoinWithRootDir(sourceRelativePath)
 	if err != nil {
