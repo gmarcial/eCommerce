@@ -8,6 +8,7 @@ import (
 	"gmarcial/eCommerce/core/checkout/application/mock"
 	"gmarcial/eCommerce/core/checkout/domain/purchase"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
+	loggerMock "gmarcial/eCommerce/platform/infrastructure/log/mock"
 	"testing"
 	"time"
 )
@@ -126,7 +127,12 @@ func buildComponentsTestUnit(blackFridayDate time.Time, getGiftProductUseCase *m
 	productsFirstTestCase := []*purchase.Product{product}
 	cart, _ := purchase.NewCart(productsFirstTestCase)
 
-	blackFridayPromotion := NewBlackFridayPromotion(blackFridayDate, getGiftProductUseCase)
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	blackFridayPromotion := NewBlackFridayPromotion(logger, blackFridayDate, getGiftProductUseCase)
 
 	return cart, blackFridayPromotion
 }
@@ -186,9 +192,14 @@ func buildComponentsTestEndToEnd(blackFridayDate time.Time) (*purchase.Cart, *Bl
 	}
 	productRepository := memory.NewProductRepository(productsInMemory)
 
-	getGiftProductUseCase := application.NewGetGiftProductUseCase(productRepository)
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
 
-	blackFridayPromotion := NewBlackFridayPromotion(blackFridayDate, getGiftProductUseCase)
+	getGiftProductUseCase := application.NewGetGiftProductUseCase(logger, productRepository)
+
+	blackFridayPromotion := NewBlackFridayPromotion(logger, blackFridayDate, getGiftProductUseCase)
 
 	return cart, blackFridayPromotion
 }

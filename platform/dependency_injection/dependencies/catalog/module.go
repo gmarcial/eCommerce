@@ -8,6 +8,7 @@ import (
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
@@ -47,9 +48,12 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 			Name:  "pickProductsUseCase",
 			Scope: di.Request,
 			Build: func(ctn di.Container) (interface{}, error) {
+				logger := ctn.Get("logger").(*zap.SugaredLogger)
+				pickProductsUseCaseLogger := logger.Named("PickProductsUseCase")
+
 				productRepository := ctn.Get("productRepository").(*memory.ProductRepository)
 				discountServiceClient := ctn.Get("discountServiceClient").(client.DiscountClient)
-				return catalog.NewPickProductsUseCase(productRepository, discountServiceClient), nil
+				return catalog.NewPickProductsUseCase(pickProductsUseCaseLogger, productRepository, discountServiceClient), nil
 			},
 			Close: nil,
 		},
@@ -57,8 +61,11 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 			Name:  "getGiftProductUseCase",
 			Scope: di.Request,
 			Build: func(ctn di.Container) (interface{}, error) {
+				logger := ctn.Get("logger").(*zap.SugaredLogger)
+				getGiftProductUseCaseLogger := logger.Named("GetGiftProductUseCase")
+
 				productRepository := ctn.Get("productRepository").(*memory.ProductRepository)
-				return catalog.NewGetGiftProductUseCase(productRepository), nil
+				return catalog.NewGetGiftProductUseCase(getGiftProductUseCaseLogger, productRepository), nil
 			},
 			Close: nil,
 		})

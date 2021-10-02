@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/sarulabs/di"
 	applicationCheckout "gmarcial/eCommerce/core/checkout/application"
+	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -11,6 +12,7 @@ import (
 func HandleMakeCart(container di.Container) http.HandlerFunc {
 
 	requestContainer, _ := container.SubContainer()
+	logger := requestContainer.Get("logger").(*zap.SugaredLogger).Named("HandleMakeCart")
 	makeCartUseCase := requestContainer.Get("makeCartUseCase").(*applicationCheckout.MakeCartUseCase)
 
 	return func(writer http.ResponseWriter, request *http.Request) {
@@ -21,6 +23,9 @@ func HandleMakeCart(container di.Container) http.HandlerFunc {
 			writer.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
+		logger.Infow("received a make cart request.",
+			"request", selectedProducts)
 
 		shoppingCart, err := makeCartUseCase.Execute(&selectedProducts)
 		if err != nil {

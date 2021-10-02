@@ -10,6 +10,7 @@ import (
 	"gmarcial/eCommerce/core/checkout/domain/promotion"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
+	loggerMock "gmarcial/eCommerce/platform/infrastructure/log/mock"
 	"google.golang.org/grpc"
 	"testing"
 	"time"
@@ -256,15 +257,26 @@ func buildPickProductsUseCaseTestEndToEnd(productRepository products.ProductRepo
 	discountServiceClient := &mock.DiscountClient{GetDiscountMock: func(ctx context.Context, in *client.GetDiscountRequest, opts ...grpc.CallOption) (*client.GetDiscountResponse, error) {
 		return &client.GetDiscountResponse{Percentage: 5}, nil
 	}}
-	return applicationCatalog.NewPickProductsUseCase(productRepository, discountServiceClient)
+
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	return applicationCatalog.NewPickProductsUseCase(logger, productRepository, discountServiceClient)
 }
 
 func buildPromotionsApplierUseCaseTestEndToEnd(blackFridayDate time.Time, productRepository products.ProductRepository) *promotional.PromotionsApplierUseCase {
-	getGiftProductUseCase := applicationCatalog.NewGetGiftProductUseCase(productRepository)
-	blackFridayPromotion := promotional.NewBlackFridayPromotion(blackFridayDate, getGiftProductUseCase)
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	getGiftProductUseCase := applicationCatalog.NewGetGiftProductUseCase(logger, productRepository)
+	blackFridayPromotion := promotional.NewBlackFridayPromotion(logger, blackFridayDate, getGiftProductUseCase)
 
 	activePromotions := []promotion.Promotion{blackFridayPromotion}
-	return promotional.NewPromotionsApplierUseCase(activePromotions)
+	return promotional.NewPromotionsApplierUseCase(logger, activePromotions)
 }
 
 func buildMakeCartUseCaseTestEndToEnd(blackFridayDate time.Time) *MakeCartUseCase {
@@ -272,5 +284,10 @@ func buildMakeCartUseCaseTestEndToEnd(blackFridayDate time.Time) *MakeCartUseCas
 	pickProductsUseCase := buildPickProductsUseCaseTestEndToEnd(productRepository)
 	promotionsApplierUseCase := buildPromotionsApplierUseCaseTestEndToEnd(blackFridayDate, productRepository)
 
-	return NewMakeCartUseCase(pickProductsUseCase, promotionsApplierUseCase)
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	return NewMakeCartUseCase(logger, pickProductsUseCase, promotionsApplierUseCase)
 }

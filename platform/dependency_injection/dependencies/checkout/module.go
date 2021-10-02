@@ -8,6 +8,7 @@ import (
 	"gmarcial/eCommerce/core/checkout/application/promotional"
 	"gmarcial/eCommerce/core/checkout/domain/promotion"
 	"gmarcial/eCommerce/platform/configuration"
+	"go.uber.org/zap"
 )
 
 const (
@@ -21,9 +22,12 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 			Name:  "blackFridayPromotion",
 			Scope: di.Request,
 			Build: func(ctn di.Container) (interface{}, error) {
+				logger := ctn.Get("logger").(*zap.SugaredLogger)
+				blackFridayPromotionLogger := logger.Named("BlackFridayPromotion")
+
 				blackFridayDate := configuration.BlackFridayDay
 				getGiftProductUseCase := ctn.Get("getGiftProductUseCase").(*catalog.GetGiftProductUseCase)
-				return promotional.NewBlackFridayPromotion(blackFridayDate, getGiftProductUseCase), nil
+				return promotional.NewBlackFridayPromotion(blackFridayPromotionLogger, blackFridayDate, getGiftProductUseCase), nil
 			},
 			Close: nil,
 		},
@@ -31,9 +35,12 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 			Name:  "promotionsApplierUseCase",
 			Scope: di.Request,
 			Build: func(ctn di.Container) (interface{}, error) {
+				logger := ctn.Get("logger").(*zap.SugaredLogger)
+				promotionsApplierUseCaseLogger := logger.Named("PromotionsApplierUseCase")
+
 				blackFridayPromotion := ctn.Get("blackFridayPromotion").(*promotional.BlackFridayPromotion)
 				activePromotions := []promotion.Promotion{blackFridayPromotion}
-				return promotional.NewPromotionsApplierUseCase(activePromotions), nil
+				return promotional.NewPromotionsApplierUseCase(promotionsApplierUseCaseLogger, activePromotions), nil
 			},
 			Close: nil,
 		},
@@ -41,9 +48,12 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 			Name:  "makeCartUseCase",
 			Scope: di.Request,
 			Build: func(ctn di.Container) (interface{}, error) {
+				logger := ctn.Get("logger").(*zap.SugaredLogger)
+				makeCartUseCaseLogger := logger.Named("MakeCartUseCase")
+
 				pickProductsUseCase := ctn.Get("pickProductsUseCase").(*catalog.PickProductsUseCase)
 				promotionsApplierUseCase := ctn.Get("promotionsApplierUseCase").(*promotional.PromotionsApplierUseCase)
-				return application.NewMakeCartUseCase(pickProductsUseCase, promotionsApplierUseCase), nil
+				return application.NewMakeCartUseCase(makeCartUseCaseLogger, pickProductsUseCase, promotionsApplierUseCase), nil
 			},
 			Close: nil,
 		})

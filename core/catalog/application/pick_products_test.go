@@ -7,6 +7,7 @@ import (
 	"gmarcial/eCommerce/core/catalog/domain/products"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
+	loggerMock "gmarcial/eCommerce/platform/infrastructure/log/mock"
 	"google.golang.org/grpc"
 	"testing"
 )
@@ -36,15 +37,22 @@ func buildPickProductsUseCaseTestUnit(discountResponse *client.GetDiscountRespon
 			return discountResponse, err
 		}}
 
-	return &PickProductsUseCase{
-		productRepository:     productRepository,
-		discountServiceClient: discountServiceClient,
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
 	}
+
+	return NewPickProductsUseCase(logger, productRepository, discountServiceClient)
 }
 
 func TestUnitPickProductsUseCase_TryPickProductsWithoutInformTheProductsToBePicked(t *testing.T) {
 	//Arrange
-	useCase := NewPickProductsUseCase(&mock.ProductRepository{}, &mock.DiscountClient{})
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	useCase := NewPickProductsUseCase(logger, &mock.ProductRepository{}, &mock.DiscountClient{})
 	var pickProducts *PickProducts
 
 	//Action
@@ -61,6 +69,11 @@ func TestUnitPickProductsUseCase_TryPickProductsWithoutInformTheProductsToBePick
 }
 
 func TestUnitPickProductsUseCase_TryPickProductsWithoutInformIDS(t *testing.T) {
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
 	//Arrange
 	testCases := []struct {
 		name string
@@ -75,7 +88,7 @@ func TestUnitPickProductsUseCase_TryPickProductsWithoutInformIDS(t *testing.T) {
 				pickProductsUseCase *PickProductsUseCase
 				pickProducts        *PickProducts
 			}{
-				pickProductsUseCase: NewPickProductsUseCase(&mock.ProductRepository{}, &mock.DiscountClient{}),
+				pickProductsUseCase: NewPickProductsUseCase(logger, &mock.ProductRepository{}, &mock.DiscountClient{}),
 				pickProducts:        &PickProducts{IDS: nil},
 			},
 		},
@@ -85,7 +98,7 @@ func TestUnitPickProductsUseCase_TryPickProductsWithoutInformIDS(t *testing.T) {
 				pickProductsUseCase *PickProductsUseCase
 				pickProducts        *PickProducts
 			}{
-				pickProductsUseCase: NewPickProductsUseCase(&mock.ProductRepository{}, &mock.DiscountClient{}),
+				pickProductsUseCase: NewPickProductsUseCase(logger, &mock.ProductRepository{}, &mock.DiscountClient{}),
 				pickProducts:        &PickProducts{IDS: []uint32{}},
 			},
 		},
@@ -237,7 +250,13 @@ func buildPickProductsUseCaseTestEndToEnd(address string) *PickProductsUseCase {
 	channel, _ := grpc.Dial(address, options...)
 
 	discountServiceClient := client.NewDiscountClient(channel)
-	return NewPickProductsUseCase(productRepository, discountServiceClient)
+
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	return NewPickProductsUseCase(logger, productRepository, discountServiceClient)
 }
 
 func TestEndToEndPickProductsUseCase_PickProducts(t *testing.T) {

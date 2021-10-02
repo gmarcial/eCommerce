@@ -5,6 +5,7 @@ import (
 	"gmarcial/eCommerce/core/catalog/application/model"
 	"gmarcial/eCommerce/core/catalog/domain/products"
 	"gmarcial/eCommerce/platform/infrastructure/adapters/catalog/data/memory"
+	loggerMock "gmarcial/eCommerce/platform/infrastructure/log/mock"
 	"testing"
 )
 
@@ -15,7 +16,12 @@ func buildGetGiftProductUseCaseTestUnit(giftProduct *products.Product) *GetGiftP
 		},
 	}
 
-	return &GetGiftProductUseCase{productRepository: productRepository}
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	return NewGetGiftProductUseCase(logger, productRepository)
 }
 
 func TestUnitGetGiftProductUseCase_TryObtainGiftProduct(t *testing.T) {
@@ -84,7 +90,12 @@ func buildGetGiftProductUseCaseTestEndToEnd(giftProduct *products.Product) *GetG
 
 	productRepository := memory.NewProductRepository(productsInMemory)
 
-	return NewGetGiftProductUseCase(productRepository)
+	logger := &loggerMock.Logger{
+		InfowMock: func(msg string, keysAndValues ...interface{}) {},
+		ErrorwMock: func(msg string, keysAndValues ...interface{}) {},
+	}
+
+	return NewGetGiftProductUseCase(logger, productRepository)
 }
 
 func TestEndToEndGetGiftProductUseCase_TryObtainGiftProduct(t *testing.T) {

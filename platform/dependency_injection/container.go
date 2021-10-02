@@ -5,12 +5,14 @@ import (
 	"gmarcial/eCommerce/platform/configuration"
 	"gmarcial/eCommerce/platform/dependency_injection/dependencies/catalog"
 	"gmarcial/eCommerce/platform/dependency_injection/dependencies/checkout"
+	"gmarcial/eCommerce/platform/dependency_injection/dependencies/infrastructure"
 )
 
 //BuildContainer construct the container of dependencies
 func BuildContainer(configuration *configuration.Configuration) di.Container {
 	builder, _ := di.NewBuilder()
 
+	infrastructure.Build(builder)
 	catalog.Build(builder, configuration)
 	checkout.Build(builder, configuration)
 
