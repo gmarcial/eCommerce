@@ -3,14 +3,15 @@ module gmarcial/eCommerce
 go 1.17
 
 require (
-	github.com/go-chi/chi v1.5.4 // indirect
-	github.com/sarulabs/di v2.0.0+incompatible // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/BurntSushi/toml v0.4.1 // indirect
+	github.com/go-chi/chi v1.5.4 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.2.5 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
-	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
+	github.com/sarulabs/di v2.0.0+incompatible // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/multierr v1.7.0 // indirect
+	go.uber.org/zap v1.19.1 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
@@ -21,4 +22,6 @@ require (
 	google.golang.org/genproto v0.0.0-20210915214522-86cf1236ec46 // indirect
 	google.golang.org/grpc v1.40.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
+	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
