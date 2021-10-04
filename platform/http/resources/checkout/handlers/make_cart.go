@@ -16,9 +16,7 @@ func HandleMakeCart(container di.Container) http.HandlerFunc {
 	makeCartUseCase := requestContainer.Get("makeCartUseCase").(*applicationCheckout.MakeCartUseCase)
 
 	return func(writer http.ResponseWriter, request *http.Request) {
-		decoder := json.NewDecoder(request.Body)
-		var selectedProducts applicationCheckout.SelectedProducts
-		err := decoder.Decode(&selectedProducts)
+		selectedProducts, err := decode(request.Body)
 		if err != nil {
 			writer.WriteHeader(http.StatusBadRequest)
 			return
@@ -27,7 +25,7 @@ func HandleMakeCart(container di.Container) http.HandlerFunc {
 		logger.Infow("received a make cart request.",
 			"request", selectedProducts)
 
-		shoppingCart, err := makeCartUseCase.Execute(&selectedProducts)
+		shoppingCart, err := makeCartUseCase.Execute(selectedProducts)
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
 			return
