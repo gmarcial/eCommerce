@@ -9,6 +9,7 @@ import (
 	"gmarcial/eCommerce/core/checkout/domain/promotion"
 	"gmarcial/eCommerce/platform/configuration"
 	"go.uber.org/zap"
+	"log"
 )
 
 const (
@@ -60,6 +61,8 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 
 	if err != nil {
 		errorMessage := fmt.Sprintf("%v: %v", errBuildCheckoutModule, err.Error())
-		panic(errorMessage)
+		log.Panic(errorMessage)
 	}
+
+	log.Print("the checkout module was constructed")
 }

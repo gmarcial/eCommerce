@@ -18,6 +18,8 @@ func HandleMakeCart(container di.Container) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		selectedProducts, err := decode(request.Body)
 		if err != nil {
+			logger.Errorw("an error occurred in process of the decode the request body",
+				"error", err)
 			writer.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -35,6 +37,8 @@ func HandleMakeCart(container di.Container) http.HandlerFunc {
 		encoder := json.NewEncoder(writer)
 		err = encoder.Encode(shoppingCart)
 		if err != nil {
+			logger.Errorw("an error occurred in process of the encode the response",
+				"error", err)
 			writer.WriteHeader(http.StatusInternalServerError)
 			return
 		}

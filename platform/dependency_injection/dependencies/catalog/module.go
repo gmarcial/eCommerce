@@ -10,6 +10,7 @@ import (
 	"gmarcial/eCommerce/platform/infrastructure/grpc/discount/client"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"log"
 )
 
 const (
@@ -72,6 +73,8 @@ func Build(builder *di.Builder, configuration *configuration.Configuration) {
 
 	if err != nil {
 		errorMessage := fmt.Sprintf("%v: %v", errBuildCatalogModule, err.Error())
-		panic(errorMessage)
+		log.Panic(errorMessage)
 	}
+
+	log.Print("the catalog module was constructed")
 }

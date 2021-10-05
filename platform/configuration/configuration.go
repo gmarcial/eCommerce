@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 	"gmarcial/eCommerce/platform/infrastructure/filepathutil"
+	"log"
 	"time"
 )
 
@@ -24,15 +25,16 @@ func LoadConfiguration() *Configuration {
 	envFilePath, err := filepathutil.JoinWithRootDir(envFileRelativePath)
 	if err != nil {
 		errorMessage := fmt.Sprintf("%v: %v", errLoadConfiguration, err.Error())
-		panic(errorMessage)
+		log.Panic(errorMessage)
 	}
 
 	configuration := new(Configuration)
 	err = cleanenv.ReadConfig(envFilePath, configuration)
 	if err != nil {
 		errorMessage := fmt.Sprintf("%v: %v", errLoadConfiguration, err.Error())
-		panic(errorMessage)
+		log.Panic(errorMessage)
 	}
 
+	log.Print("the configuration was loaded.")
 	return configuration
 }

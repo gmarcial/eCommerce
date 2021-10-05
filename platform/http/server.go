@@ -20,5 +20,6 @@ func ListenAndServe(container di.Container, configuration *configuration.Configu
 		Handler: router,
 	}
 
+	log.Print("starting the listen and serve HTTP")
 	log.Print(server.ListenAndServe())
 }
