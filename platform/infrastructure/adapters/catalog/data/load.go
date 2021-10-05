@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	sourceRelativePath = "platform/infrastructure/adapters/catalog/data/source/products.json"
+	sourceRelativePath = "products.json"
 )
 
 //LoadProducts read the products of data source and load in memory
