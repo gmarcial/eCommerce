@@ -1,0 +1,11 @@
+# test and mock
+**/*_test.go
+**/*mock*
+
+# git
+*.md
+.gitignore
+
+# docker
+Dockerfile
+docker-compose

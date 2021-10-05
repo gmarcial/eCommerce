@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  ecommerce:
+    container_name: ecommerce
+    image: ecommerce
+    ports:
+      - "5000:5000"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - discount-service
+    restart: always
+    networks:
+      - ecommerce-network
+  discount-service:
+    container_name: discount-service
+    image: hashorg/hash-mock-discount-service
+    ports:
+      - "50051:50051"
+    networks:
+      - ecommerce-network
+networks:
+  ecommerce-network:
+    driver: bridge
