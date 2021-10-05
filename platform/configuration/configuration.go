@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	envFileRelativePath  = "platform/configuration/.env"
+	envFileRelativePath  = ".env"
 	errLoadConfiguration = "an error occurred to load the configurations"
 )
 
